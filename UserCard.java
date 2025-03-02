@@ -18,6 +18,10 @@ public abstract class UserCard {
         this.accessLevel = accessLevel;
     }
 
+    public UserCard(String username2, String cardId, String expiryDate, int roomNumber2) {
+        //TODO Auto-generated constructor stub
+    }
+
     private String generateCardNumber() {
         Random rand = new Random();
         return String.format("%04d", rand.nextInt(10000));
@@ -34,3 +38,4 @@ public abstract class UserCard {
         }
     }
 }
+
