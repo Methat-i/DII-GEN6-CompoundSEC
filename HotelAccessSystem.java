@@ -31,11 +31,13 @@ public class HotelAccessSystem {
                 if (admin.verifyLogin("Admin", adminPass)) {
                     System.out.println("");
                     System.out.print("----------------------------");
-                    System.out.println(" Admin เข้าสู่ระบบเรียบร้อยแล้ว ");
+                    System.out.println(" Admin เข้าสู่ระบบเรียบร้อยแล้ว");
                     System.out.print("----------------------------");
                     // Loop สำหรับเมนูของ Admin
                     while (true) {
-
+                        System.out.println("");
+                        System.out.println("             ยินดีต้อนรับ Admin");
+                        System.out.println("");
                         System.out.println("====== กรุณาเลือกตัวเลือกของ Admin: =======");
                         
                         System.out.println("0: สร้างบัตรใหม่");
