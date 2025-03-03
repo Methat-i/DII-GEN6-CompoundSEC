@@ -5,7 +5,7 @@ public abstract class CardDecorator extends UserCard {
     protected UserCard decoratedCard;
    
     public CardDecorator(UserCard decoratedCard) {
-        super(decoratedCard.username, decoratedCard.cardId, decoratedCard.expiryDate, decoratedCard.roomNumber);
+        super(decoratedCard.username, decoratedCard.cardId, decoratedCard.cardNumber, decoratedCard.expiryHours, decoratedCard.roomNumber, decoratedCard.accessLevel);
         this.decoratedCard = decoratedCard;
     }
    

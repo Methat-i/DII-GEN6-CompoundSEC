@@ -6,8 +6,11 @@ public class TimeEncryptedCard extends CardDecorator {
    
     @Override
     public void accessRoom() {
+        System.out.println("");
         System.out.println("ตรวจสอบการเข้ารหัสแบบเวลาของบัตร...");
+
         super.accessRoom();
+        System.out.println("");
     }
 }
 

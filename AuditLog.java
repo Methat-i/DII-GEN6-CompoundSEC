@@ -1,6 +1,3 @@
-
-
-
 import java.util.*;
 // Singleton Pattern สำหรับบันทึก Audit Log
 // เพื่อให้แน่ใจว่ามี instance เดียวที่ใช้บันทึกเหตุการณ์ในระบบ
@@ -22,8 +19,11 @@ public class AuditLog {
     }
    
     public void logEvent(String event) {
-        logs.add(event);
-        System.out.println("Log event: " + event);
+        String timestamp = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+            .format(new java.util.Date());
+        String log = timestamp + " - " + event;
+        logs.add(log);
+        System.out.println("Log event: " + log);
     }
    
     public void logAccess(String username, int floorOrRoom, String action) {
@@ -49,6 +49,12 @@ public class AuditLog {
             }
         }
     }
+
+    public void printAdminLogs() {
+        for (String log : logs) {
+            if (log.contains("Admin")) {
+                System.out.println(log);
+            }
+        }
+    }
 }
-
-

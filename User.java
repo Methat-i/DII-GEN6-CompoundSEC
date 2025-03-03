@@ -2,18 +2,17 @@ import java.util.*;
 // คลาส User สำหรับผู้ใช้ทั่วไป
 // ผู้ใช้จะเข้าสู่ระบบโดยใช้ข้อมูลการ์ดที่ Admin สร้างไว้
 class User extends UserCard implements UserManagement, RoomManagement {
-    public User(String username, String cardId, String expiryDate, int roomNumber) {
-        super(username, cardId, expiryDate, roomNumber);
+    public User(String username, String cardId, int cardNumber, int expiryHours, int roomNumber, String accessLevel) {
+        super(username, cardId, cardNumber, expiryHours, roomNumber, accessLevel);
     }
    
     @Override
     public boolean verifyLogin(String username, String password) {
-        // ใช้ cardId เป็น password สำหรับตรวจสอบ
-        return this.cardId.equals(password);
+        return this.username.equals(username) && this.cardId.equals(password);
     }
    
     @Override
-    public boolean verifyRoomAccess(String cardId, int roomNumber) {
+    public boolean verifyRoomAccess(String caradId, int roomNumber) {
         return this.cardId.equals(cardId) && this.roomNumber == roomNumber;
     }
    
@@ -38,14 +37,25 @@ class User extends UserCard implements UserManagement, RoomManagement {
    
     // ปรับปรุงฟังก์ชันการขึ้นลิฟต์ให้วนลูปจนกว่าจะเลือกชั้นที่ถูกต้อง
     public void useElevator(Scanner scanner) {
-        int destinationFloor;
+        String destinationFloor;
         int userFloor = Utils.getFloorFromRoom(this.roomNumber);
+        int destinationFloorInt = 0; // กำหนดค่าเริ่มต้น
+        
         while (true) {
-            System.out.print("กรุณาระบุชั้นที่ต้องการขึ้น (เช่น -1, 0, 1, 2, 3, 4): ");
-            destinationFloor = Integer.parseInt(scanner.nextLine());
-            if(destinationFloor == -1 || destinationFloor == 0 || destinationFloor == userFloor) {
+            System.out.print("กรุณาระบุชั้นที่ต้องการขึ้น (เช่น Normal, Medium, High): ");
+            destinationFloor = scanner.nextLine();
+            if (destinationFloor.equals("Normal") || destinationFloor.equals("Medium") || destinationFloor.equals("High")) {
                 System.out.println("User " + username + " ใช้ลิฟต์ไปชั้น " + destinationFloor);
-                AuditLog.getInstance().logAccess(username, destinationFloor, "Elevator access");
+
+                if (destinationFloor.equals("Normal")) {
+                    destinationFloorInt = 1;
+                } else if (destinationFloor.equals("Medium")) {
+                    destinationFloorInt = 2;
+                } else if (destinationFloor.equals("High")) {
+                    destinationFloorInt = 3;
+                }
+
+                AuditLog.getInstance().logAccess(username, destinationFloorInt, "Elevator access");
                 break;
             } else {
                 System.out.println("ไม่สามารถขึ้นลิฟต์ไปชั้น " + destinationFloor + " ได้ (ห้องของคุณอยู่ชั้น " + userFloor + ") กรุณาลองใหม่อีกครั้ง");
@@ -56,13 +66,24 @@ class User extends UserCard implements UserManagement, RoomManagement {
     // สำหรับการเข้าสู่ระบบ เราจะให้วนลูปจนกว่าผู้ใช้จะป้อนรหัสบัตรถูกต้อง
     public void login(Scanner scanner) {
         while (true) {
-            System.out.print("พิมพ์รหัสบัตรเพื่อเข้าสู่ระบบ: ");
+            System.out.println("พิมพ์ชื่อผู้ใช้: ");
+            System.out.print(">>");
+            System.out.println("");
+            String inputUsername = scanner.nextLine();
+            System.out.println("พิมพ์รหัสบัตร: ");
+            System.out.print(">>");
             String cardInput = scanner.nextLine();
-            if (this.verifyLogin(this.username, cardInput)) {
+            System.out.println("");
+            if (this.verifyLogin(inputUsername, cardInput)) {
                 System.out.println("User " + username + " เข้าสู่ระบบเรียบร้อยแล้ว");
+                System.out.println("");
+                AuditLog.getInstance().logAccess(username, cardNumber, "User login");
+                System.out.println("");
                 break;
             } else {
-                System.out.println("รหัสบัตรไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง");
+                System.out.println("");
+                System.out.println("ชื่อผู้ใช้หรือรหัสบัตรไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง");
+                System.out.println("");
             }
         }
     }
