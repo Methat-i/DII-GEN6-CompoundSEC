@@ -1,35 +1,36 @@
+
 import java.util.*;
 // คลาส Admin สำหรับจัดการบัตรและประวัติการใช้งาน
 // ในที่นี้ Admin จะเป็นผู้สร้างบัตรและเก็บบัตรไว้ในระบบ (cardDatabase)
 public class Admin extends UserCard implements UserManagement, RoomManagement {
     // ใช้ static Map เพื่อให้ข้อมูลบัตรที่สร้างโดย Admin สามารถเข้าถึงได้จากทุกที่
     public static Map<String, UserCard> cardDatabase = new HashMap<>();
-    
+   
     // Map สำหรับเก็บสถานะของห้อง (key: room number, value: 1 = เต็ม, 0 = ว่าง)
     private Map<Integer, Integer> roomStatus = new HashMap<>();
-    
+   
     public Admin(String username, String cardId, String expiryDate, int roomNumber) {
         super(username, cardId, expiryDate, roomNumber);
     }
-    
+   
     @Override
     public boolean verifyLogin(String username, String password) {
         // ตรวจสอบ Admin ด้วยรหัส "Admin012345"
         return password.equals("Admin012345");
     }
-    
+   
     @Override
     public boolean verifyRoomAccess(String cardId, int roomNumber) {
         // Admin มีสิทธิ์เข้าห้องทุกห้อง
         return true;
     }
-    
+   
     @Override
     public void accessRoom() {
         System.out.println("Admin เข้าห้องหมายเลข " + roomNumber);
         AuditLog.getInstance().logAccess(username, roomNumber, "Admin access");
     }
-    
+   
     // 0: ฟังก์ชันสำหรับสร้างบัตรใหม่โดย Admin
     public void createCard(Scanner scanner) {
         System.out.println("=== สร้างบัตรใหม่ ===");
@@ -47,7 +48,7 @@ public class Admin extends UserCard implements UserManagement, RoomManagement {
         AuditLog.getInstance().logEvent("Create card: " + newCardId);
         System.out.println("สร้างบัตรเรียบร้อยแล้ว");
     }
-    
+   
     // 1: ฟังก์ชันสำหรับแก้ไขหรือ ลบบัตรโดย Admin
     public void modifyOrDeleteCard(Scanner scanner) {
         System.out.println("=== แก้ไข/ลบบัตร ===");
@@ -64,12 +65,12 @@ public class Admin extends UserCard implements UserManagement, RoomManagement {
         String action = scanner.nextLine();
         System.out.print("พิมพ์รหัสบัตรที่ต้องการ: ");
         String targetCardId = scanner.nextLine();
-        
+       
         if(!cardDatabase.containsKey(targetCardId)){
             System.out.println("ไม่พบรหัสบัตรในระบบ");
             return;
         }
-        
+       
         if(action.equalsIgnoreCase("แก้ไข")){
             UserCard card = cardDatabase.get(targetCardId);
             System.out.print("พิมพ์ชื่อใหม่: ");
@@ -88,7 +89,7 @@ public class Admin extends UserCard implements UserManagement, RoomManagement {
             System.out.println("คำสั่งไม่ถูกต้อง");
         }
     }
-    
+   
     // 2: ฟังก์ชันสำหรับแสดงประวัติการใช้งาน
     public void showHistory(Scanner scanner) {
         System.out.println("=== แสดงประวัติการใช้งาน ===");
@@ -105,7 +106,7 @@ public class Admin extends UserCard implements UserManagement, RoomManagement {
             System.out.println("คำสั่งไม่ถูกต้อง");
         }
     }
-    
+   
     // ฟังก์ชันสำหรับแสดงสถานะห้อง (เต็ม = 1, ว่าง = 0)
     public void showRoomStatus() {
         System.out.println("=== สถานะห้อง ===");
@@ -113,7 +114,7 @@ public class Admin extends UserCard implements UserManagement, RoomManagement {
             System.out.println("ห้อง " + entry.getKey() + ": " + (entry.getValue() == 1 ? "เต็ม" : "ว่าง"));
         }
     }
-    
+   
     // ฟังก์ชันสำหรับปรับปรุงสถานะห้อง
     public void updateRoomStatus(Scanner scanner) {
         System.out.print("พิมพ์หมายเลขห้องที่ต้องการอัปเดต: ");
@@ -125,3 +126,5 @@ public class Admin extends UserCard implements UserManagement, RoomManagement {
         System.out.println("อัปเดตสถานะห้องเรียบร้อยแล้ว");
     }
 }
+
+

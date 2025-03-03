@@ -1,90 +1,76 @@
-
 import java.util.*;;
 // คลาสหลักสำหรับควบคุมระบบ HotelAccessSystem
 // ผู้ดูแล (Admin) สร้างบัตรและผู้ใช้ (User) จะเข้าสู่ระบบโดยใช้การ์ดที่ Admin สร้างไว้
 public class HotelAccessSystem {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        
+       
         while (true) {
-            System.out.println("----------------------------");
-            System.out.println("");
+            System.out.print("");
             System.out.println("เลือกการใช้งาน: User (U/u) หรือ Admin (A/a) หรือ Q/q เพื่อออก");
-            System.out.println("");
-            System.out.print(">>");
+            System.out.print("");
             String choice = scanner.nextLine();
-            System.out.println("");
+            System.out.print("");
             if (choice.equalsIgnoreCase("Q")) {System.out.print("");
-            System.out.print("----------------------------");
                 System.out.println("ออกจากระบบ");
-                System.out.println("----------------------------");
-                System.out.println("");
                 break;
             } else if (choice.equalsIgnoreCase("A")) {
                 // เข้าสู่ระบบ Admin
-                System.out.println("");
-                System.out.println("=== กรุณาพิมพ์รหัส Admin: ===");
-                System.out.print(">>");
+                System.out.println("กรุณาพิมพ์รหัส Admin:");
                 String adminPass = scanner.nextLine();
-                System.out.println("");
+                System.out.print("");
                 Admin admin = new Admin("Admin", "AdminCard", "2099-12-31", 0);
                 if (admin.verifyLogin("Admin", adminPass)) {
-                    System.out.println("");
-                    System.out.print("----------------------------");
-                    System.out.println(" Admin เข้าสู่ระบบเรียบร้อยแล้ว");
-                    System.out.print("----------------------------");
+                    System.out.println("Admin เข้าสู่ระบบเรียบร้อยแล้ว");
+                    System.out.print("");
                     // Loop สำหรับเมนูของ Admin
                     while (true) {
-                        System.out.println("");
-                        System.out.println("             ยินดีต้อนรับ Admin");
-                        System.out.println("");
-                        System.out.println("====== กรุณาเลือกตัวเลือกของ Admin: =======");
-                        
+                        System.out.println("กรุณาเลือกตัวเลือกของ Admin:");
+                        System.out.print("");
                         System.out.println("0: สร้างบัตรใหม่");
-                     
+                        System.out.print("");
                         System.out.println("1: แก้ไข/ลบบัตร");
-                        
+                        System.out.print("");
                         System.out.println("2: แสดงประวัติการใช้งาน");
-                     
+                        System.out.print("");
                         System.out.println("3: แสดงสถานะห้อง");
-                  
+                        System.out.print("");
                         System.out.println("4: ปรับปรุงสถานะห้อง");
-                 
+                        System.out.print("");
                         System.out.println("Q: ออกจาก Admin");
-                        System.out.println("");
-                        System.out.print(">>");
+                        System.out.print("");
                         String adminOption = scanner.nextLine();
-                        System.out.println("");
+                        System.out.print("");
                         if(adminOption.equalsIgnoreCase("Q")){
-                            System.out.println("");
+                            System.out.print("");
                             System.out.println("ออกจากระบบ Admin");
-                            System.out.println("");
+                            System.out.print("");
                             break;
                         }
-                        
+                       
                         switch(adminOption) {
                             case "0":
-                            System.out.println("");
+                            System.out.print("");
                                 admin.createCard(scanner);
                                 break;
                             case "1":
-                            System.out.println("");
+                            System.out.print("");
                                 admin.modifyOrDeleteCard(scanner);
                                 break;
                             case "2":
-                            System.out.println("");
+                            System.out.print("");
                                 admin.showHistory(scanner);
                                 break;
                             case "3":
-                            System.out.println("");
+                            System.out.print("");
                                 admin.showRoomStatus();
                                 break;
                             case "4":
-                            System.out.println("");
+                            System.out.print("");
                                 admin.updateRoomStatus(scanner);
                                 break;
                             default:
-                            System.out.println("");
+                            System.out.print("");
                                 System.out.println("ตัวเลือกไม่ถูกต้อง");
                         }
                     }
@@ -97,7 +83,7 @@ public class HotelAccessSystem {
                 System.out.println("=== ระบบเข้าสู่ระบบ User ===");
                 System.out.print("");
                 System.out.print("พิมพ์รหัสบัตรของคุณ: ");
-                
+               
                 String userCardId = scanner.nextLine();
                 System.out.print("");
                 // ตรวจสอบว่ามีการ์ดที่สร้างไว้หรือไม่
@@ -107,7 +93,7 @@ public class HotelAccessSystem {
                 }
                 // ดึงข้อมูลการ์ดของผู้ใช้จาก cardDatabase
                 UserCard userCard = Admin.cardDatabase.get(userCardId);
-                
+               
                 // วนลูปการเข้าสู่ระบบจนกว่าผู้ใช้จะป้อนรหัสบัตรถูกต้อง
                 if (userCard instanceof User) {
                     ((User) userCard).login(scanner);
@@ -117,7 +103,7 @@ public class HotelAccessSystem {
                     UserCard encryptedUserCard = new TimeEncryptedCard(userCard);
                     encryptedUserCard.accessRoom();
                 } else {
-                    System.out.println("");
+                    System.out.print("");
                     System.out.println("ข้อมูลการ์ดไม่ถูกต้องสำหรับ User");
                 }
             } else {

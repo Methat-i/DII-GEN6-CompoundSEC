@@ -1,4 +1,3 @@
-
 import java.util.*;
 // คลาส User สำหรับผู้ใช้ทั่วไป
 // ผู้ใช้จะเข้าสู่ระบบโดยใช้ข้อมูลการ์ดที่ Admin สร้างไว้
@@ -6,18 +5,18 @@ class User extends UserCard implements UserManagement, RoomManagement {
     public User(String username, String cardId, String expiryDate, int roomNumber) {
         super(username, cardId, expiryDate, roomNumber);
     }
-    
+   
     @Override
     public boolean verifyLogin(String username, String password) {
         // ใช้ cardId เป็น password สำหรับตรวจสอบ
         return this.cardId.equals(password);
     }
-    
+   
     @Override
     public boolean verifyRoomAccess(String cardId, int roomNumber) {
         return this.cardId.equals(cardId) && this.roomNumber == roomNumber;
     }
-    
+   
     // ปรับปรุง method accessRoom ให้วนลูปรับหมายเลขห้องจนกว่าจะถูกต้อง
     @Override
     public void accessRoom() {
@@ -36,7 +35,7 @@ class User extends UserCard implements UserManagement, RoomManagement {
             }
         }
     }
-    
+   
     // ปรับปรุงฟังก์ชันการขึ้นลิฟต์ให้วนลูปจนกว่าจะเลือกชั้นที่ถูกต้อง
     public void useElevator(Scanner scanner) {
         int destinationFloor;
@@ -53,7 +52,7 @@ class User extends UserCard implements UserManagement, RoomManagement {
             }
         }
     }
-    
+   
     // สำหรับการเข้าสู่ระบบ เราจะให้วนลูปจนกว่าผู้ใช้จะป้อนรหัสบัตรถูกต้อง
     public void login(Scanner scanner) {
         while (true) {
