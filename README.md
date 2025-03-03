@@ -20,3 +20,6 @@ The importances of the project is allow student to do
 - Card generation or modification will be logged with necessary info
 3. Card management 
 - Add, modify, revoke permission of each card
+
+Uml class diagarm
+![Diagarm](https://github.com/user-attachments/assets/8208c511-fb41-43b8-bd83-607091ebba9e)
